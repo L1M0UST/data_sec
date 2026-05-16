@@ -1,0 +1,37 @@
+crawler_config_path: sites.yaml
+upload_from_dir: data/internet_side/crawler_output/articles
+state_db_path: data/internet_side/crawler_state/state.db
+processed_dir: data/intranet_side/llm_pipeline/processed
+failed_dir: data/intranet_side/llm_pipeline/failed
+internet_logs_dir: data/internet_side/logs
+intranet_logs_dir: data/logs/intranet_side
+upload_remote:
+  host: 127.0.0.1
+  port: 22
+  username: your_user
+  password: your_password
+  private_key_path:
+  remote_base_dir: /data_sec/internet_side/upload_articles
+ftp_remote:
+  host: 127.0.0.1
+  port: 21
+  username: your_user
+  password: your_password
+  remote_base_dir: /data_sec/internet_side/upload_articles
+  local_inbox_dir: data/intranet_side/ftp_stage/inbox
+  local_archive_dir: data/intranet_side/ftp_stage/archive
+  delete_remote_after_download: true
+llm:
+  endpoint: http://127.0.0.1:8000/v1/chat/completions
+  api_key:
+  model: qwen-plus
+  timeout_seconds: 120
+  max_input_chars: 12000
+clickhouse:
+  host: 127.0.0.1
+  port: 8123
+  username: default
+  password: ""
+  database: default
+  table: data_breach_events_distributed
+  secure: false

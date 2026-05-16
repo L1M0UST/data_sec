@@ -1,0 +1,135 @@
+output_dir: data/internet_side/crawler_output
+state_db: data/internet_side/crawler_state/state.db
+user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36
+default_proxy: http://127.0.0.1:7890
+sites:
+  - site_id: thehackernews_data_breach
+    name: The Hacker News (data breach)
+    entry_urls:
+      - https://thehackernews.com/search/label/data%20breach
+    allowed_domains: [thehackernews.com]
+    discover:
+      link_allow_regex: "^https://thehackernews\\.com/\\d{4}/\\d{2}/.*\\.html$"
+      link_deny_regex: "thehackernews\\.uk/"
+    fetch:
+      rate_limit_per_sec: 1.0
+
+  - site_id: securityweek_data_leak
+    name: SecurityWeek (data leak)
+    entry_urls:
+      - https://www.securityweek.com/feed/
+    allowed_domains: [www.securityweek.com, securityweek.com]
+    discover:
+      mode: rss
+      link_allow_regex: "^https://www\\.securityweek\\.com/[a-z0-9-]+/?$"
+      item_text_allow_regex: "(?i)\\bdata (leak|breach)\\b"
+      rss_use_summary: true
+    fetch:
+      rate_limit_per_sec: 0.8
+      use_curl_cffi: true
+      headers:
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
+        Accept-Language: "en-US,en;q=0.9"
+        Referer: "https://www.google.com/"
+
+  - site_id: databreach_today_news
+    name: DataBreachToday (news)
+    entry_urls:
+      - https://www.databreachtoday.com/news
+    allowed_domains: [www.databreachtoday.com, databreachtoday.com]
+    discover:
+      link_allow_regex: "^https://www\\.databreachtoday\\.com/.*-a-\\d+$"
+    fetch:
+      rate_limit_per_sec: 0.8
+
+  - site_id: itsecuritynews_data_leak
+    name: IT Security News (data leak)
+    entry_urls:
+      - https://www.itsecuritynews.info/feed/
+    allowed_domains: [www.itsecuritynews.info, itsecuritynews.info]
+    discover:
+      mode: rss
+      link_allow_regex: "^https://www\\.itsecuritynews\\.info/.*"
+      item_text_allow_regex: "(?i)\\b(breach|leak|compromised|exposed|stolen)\\b"
+      rss_use_summary: true
+    fetch:
+      rate_limit_per_sec: 0.8
+
+  - site_id: bleepingcomputer_data_breach
+    name: BleepingComputer (data breach)
+    entry_urls:
+      - https://www.bleepingcomputer.com/tag/data-breach/
+    allowed_domains: [www.bleepingcomputer.com, bleepingcomputer.com]
+    discover:
+      mode: html
+      link_allow_regex: "^https://www\\.bleepingcomputer\\.com/news/.*"
+    fetch:
+      rate_limit_per_sec: 0.5
+      use_curl_cffi: true
+      headers:
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+        Accept-Language: "en-US,en;q=0.9"
+
+  - site_id: cybersecurity_insiders_data_breach
+    name: Cybersecurity Insiders (data breach)
+    entry_urls:
+      - https://www.cybersecurity-insiders.com/category/cyber-threats-attacks/data-breach/
+    allowed_domains: [www.cybersecurity-insiders.com, cybersecurity-insiders.com]
+    discover:
+      mode: html
+      link_allow_regex: "^https://www\\.cybersecurity-insiders\\.com/.+/$"
+      link_deny_regex: "/category/|/tag/|/author/|/page/|/portfolio/|/webinars?/|/whitepaper/|/research-library/|/sponsor-research/|/resources/|/reports?/|/publish-with-us/|/contact/|/join-cybersecurity-insiders/|/cybersecurity-excellence-awards/|/ciso-impact-marketing/|/login/"
+    fetch:
+      rate_limit_per_sec: 0.8
+      use_curl_cffi: true
+      headers:
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
+        Accept-Language: "en-US,en;q=0.9"
+        Referer: "https://www.google.com/"
+
+  - site_id: krebsonsecurity_data_breaches
+    name: Krebs on Security (data breaches)
+    entry_urls:
+      - https://krebsonsecurity.com/category/data-breaches/
+    allowed_domains: [krebsonsecurity.com, www.krebsonsecurity.com]
+    discover:
+      mode: html
+      link_allow_regex: "^https://krebsonsecurity\\.com/\\d{4}/\\d{2}/.+/$"
+      link_deny_regex: "/category/|/page/|/feed/"
+    fetch:
+      rate_limit_per_sec: 0.8
+
+  - site_id: databreaches_news
+    name: DataBreaches.net
+    entry_urls:
+      - https://databreaches.net/feed/
+    allowed_domains: [databreaches.net, www.databreaches.net]
+    discover:
+      mode: rss
+      link_allow_regex: "^https://databreaches\\.net/\\d{4}/\\d{2}/\\d{2}/.+/?(\\?.*)?$"
+      rss_use_summary: true
+    fetch:
+      rate_limit_per_sec: 0.8
+      use_curl_cffi: true
+      headers:
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
+        Accept-Language: "en-US,en;q=0.9"
+        Referer: "https://www.google.com/"
+
+  - site_id: darkreading_data_breaches
+    name: Dark Reading (cyberattacks and data breaches)
+    entry_urls:
+      - https://www.darkreading.com/cyberattacks-data-breaches
+    allowed_domains: [www.darkreading.com, darkreading.com]
+    discover:
+      mode: html
+      link_allow_regex: "^https://www\\.darkreading\\.com/(cyberattacks-data-breaches|endpoint-security|cloud-security|application-security|threat-intelligence)/.+"
+      link_deny_regex: "/search|/about|/rss|/whitepaper|/webinar|/tag/"
+    fetch:
+      rate_limit_per_sec: 0.6
+      use_curl_cffi: true
+      headers:
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
+        Accept-Language: "en-US,en;q=0.9"
+        Referer: "https://www.google.com/"
+

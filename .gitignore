@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.log
+*.db
+.env
+.env.*
+*.pem
+*.key
+*.crt
+pipeline.yaml
+data/
+
